@@ -148,17 +148,27 @@ class AppointmentBooking {
         });
 
         const form = container.querySelector("#appointmentForm");
+
+
+        let isSubmitting = false;
+
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
+
+            if (isSubmitting) {
+                return; 
+            }
+
+            isSubmitting = true; 
 
             const name = document.querySelector("#name").value;
             const phonenumber = document.querySelector("#phonenumber").value;
             const date = document.querySelector("#date").value;
             const timeslot = document.querySelector("#timeslot").value;
 
-
             if (!name || !phonenumber || !date || !timeslot) {
                 alert("Please fill in all fields.");
+                isSubmitting = false; // Reset flag
                 return;
             }
 
@@ -166,12 +176,12 @@ class AppointmentBooking {
 
             try {
                 await this.bookAppointment(data);
-
-
                 const appointments = await this.getAppointments();
                 this.updateAppointmentsList(appointments);
             } catch (error) {
                 this.handleError(error);
+            } finally {
+                isSubmitting = false;
             }
         });
     }
