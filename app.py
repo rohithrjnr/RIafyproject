@@ -2,28 +2,28 @@ from flask import Flask, send_from_directory, jsonify, request
 from flask_cors import CORS
 from models import db, Appointment
 
-# Initialize Flask app
+
 app = Flask(__name__, static_folder="static")
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db.init_app(app)
 
-# Ensure database creation at startup
+
 with app.app_context():
     db.create_all()
 
-# Serve the frontend
+
 @app.route('/')
 def serve_frontend():
     return send_from_directory(app.static_folder, 'index.html')
 
-# Serve static files (optional: useful if assets aren't working)
+
 @app.route('/<path:path>')
 def serve_static_files(path):
     return send_from_directory(app.static_folder, path)
 
-# API routes
+
 @app.route('/api/slots', methods=['GET'])
 def available_slots():
     date = request.args.get('date')
