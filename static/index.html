@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booking Demo</title>
+    <link rel="stylesheet" href="plugins/styles.css">
+</head>
+<body>
+    <div id="bookingContainer"></div>
+
+    <script src="plugins/bookingplugin.js"></script>
+    <script>
+        const bookingSystem = new AppointmentBooking('http://127.0.0.1:5000');
+        bookingSystem.render('bookingContainer');
+    </script>
+</body>
+</html>
